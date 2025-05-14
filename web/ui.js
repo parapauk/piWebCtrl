@@ -83,8 +83,20 @@ async function getStats(outputElementId) {
       const strength = strengthSplit[0];
       const total = strengthSplit[1]; 
       const strPerc = (strength/total*100).toFixed(2); 
-      const meter = document.getElementById('wifiMeter');
-      meter.value = strPerc;
+      const meter = document.getElementById('meterProgress');
+      if (strPerc >= '60') {    
+        const bgColor = 'green';   
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      } else if (strPerc < '60' && strPerc >= '30') {
+        const bgColor = 'orange';  
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      } else {
+        const bgColor = 'red';
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      }
   } else {
     await updateElement(outputElementId, data.error);
   }
@@ -124,8 +136,21 @@ async function countdown() {
       const strength = strengthSplit[0];
       const total = strengthSplit[1]; 
       const strPerc = (strength/total*100).toFixed(2); 
-      const meter = document.getElementById('wifiMeter');
-      meter.value = strPerc;
+      const meter = document.getElementById('meterProgress');
+      if (strPerc >= '60') {
+        const bgColor = 'green';
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      } else if (strPerc < '60' && strPerc >= '30') {
+        const bgColor = 'orange';
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      } else {
+        const bgColor = 'red';
+        meter.style.width = strPerc+'%';
+        meter.style.backgroundColor = bgColor;
+      }
+//      meter.style.width = strPerc+'%';
     } else {
       timerElement.innerHTML = timeLeft;
       timeLeft--;
