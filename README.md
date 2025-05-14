@@ -6,13 +6,21 @@ Running it in Background, open any web browser and point it to your Pi network I
 
 ### Install
 
-* Login into ssh on your Pi and go to "/home/pi" folder;
+* Login into ssh on your Pi and go to "home" folder;
 
-`cd /home/pi`
+`cd ~`
 
 * Clone the GIT into the home directory;
 
 `git clone https://github.com/levelKro/piWebCtrl.git`
+
+* Change into the cloned folder;
+
+`cd piWebCtrl`
+
+* Ensure the autostart script has the correct user and home folder (find this out by running pwd and remove piWebCtrl;
+
+`nano _systemd/piwebctrl.service`
 
 * Move the Autostart script into the init.d folder;
 
