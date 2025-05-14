@@ -1,6 +1,7 @@
 const apiRequests = {}; // Object to store XMLHttpRequest objects for getApi
 
 async function fetchData(url) {
+console.error(url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
