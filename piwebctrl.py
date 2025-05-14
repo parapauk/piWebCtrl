@@ -31,7 +31,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            outputJson={"ramfree":str(self.get_ramFree())+"MB","ramtotal":str(self.get_ramTotal())+"MB","cpuspeed":str(self.get_cpu_speed())+"MHz","cputemp":str(self.get_temperature())+"°C","cpuuse":str(self.get_cpu_use())+"%","load":str(self.get_load()),"ip":str(self.get_ipaddress()),"uptime":str(self.get_uptime())}
+            outputJson={"ramfree":str(self.get_ramFree())+"MB","ramtotal":str(self.get_ramTotal())+"MB","cpuspeed":str(self.get_cpu_speed())+"MHz","cputemp":str(self.get_temperature())+"°C","cpuuse":str(self.get_cpu_use())+"%","load":str(self.get_load()),"ip":str(self.get_ipaddress()),"wifi":str(self.get_wifi()),"uptime":str(self.get_uptime())}
             return self.wfile.write(bytes(json.dumps(outputJson), "utf-8"))
         
         elif pathSection[1] == "run":
@@ -42,6 +42,9 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 if pathSection[2] == "reboot":
                     self.wfile.write(bytes('{"html":"Rebooting the Raspberry Pi","cmd":null}', "utf-8"))
                     os.system("sudo reboot &")
+                if pathSection[2] == "restartscript":
+                    self.wfile.write(bytes('{"html":"Restarting the script","cmd":null}', "utf-8"))
+                    os.system("w")
                 elif pathSection[2] == "poweroff":
                     self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
                     os.system("sudo poweroff &")
@@ -108,6 +111,14 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             return s.decode().replace("\n","")
         except:
             return "0.0.0.0"
+
+    def get_wifi(self):
+        try:
+            command = "iwconfig wlan0 | grep Quality"
+            return subprocess.check_output(command, shell=True, text=True).strip()
+        except:
+            return "Nada"
+
     
     def get_cpu_speed(self):
         try:

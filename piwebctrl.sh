@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/pi/piWebCtrl
+cd /home/jonny/piWebCtrl
 python3 ./piwebctrl.py

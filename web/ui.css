@@ -12,9 +12,10 @@ a:hover {
 }
 .wrapper {
 	display:block;
+	border-radius: 12px;
 	margin:20px auto;
 	min-width:320px;
-	max-width:640px;
+	max-width:800px;
 	height: calc(100vh - 50px);
 	background:#131a26;
 }
@@ -141,12 +142,12 @@ input[type="password"]{
 	background:#0b0b0d;
 	border:1px solid #1c1c21;
 	font-size:14px;
-	padding:10px 10px 10px 74px;
+	padding:10px 10px 10px 10px;
 	font-family:Courier;
 	margin: 5px auto;
 	text-align:left;
 	min-height:64px;
-	width:auto;
+	width:90%;
 }
 .stats img {
 	margin:5px 10px 0 -64px;
@@ -161,4 +162,12 @@ input[type="password"]{
 }
 .stats span b {
 	color:#1b6af2
+}
+.main {
+	font-size: 60px;
+	color: #185fd9;
+}
+.fas.header {
+	font-size: 54px;
+	float: left;
 }

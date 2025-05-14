@@ -53,6 +53,7 @@ function geStats(id) {
 				document.getElementById("statsSYSLoad").innerHTML=values.load;
 				document.getElementById("statsSYSUptime").innerHTML=values.uptime;
 				document.getElementById("statsSYSIP").innerHTML=values.ip;
+                                document.getElementById("statsWIFI").innerHTML=values.wifi;
 			}
 			else{
 				document.getElementById(id).innerHTML=values.error;

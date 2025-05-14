@@ -4,7 +4,9 @@
 		<meta charset="UTF-8" />
 		<script type="text/javascript" src="ui.js"></script>
 		<link rel="stylesheet" href="ui.css">
-		<link rel="stylesheet" href="cube3d.css">
+<!--                 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
+		<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -13,17 +15,19 @@
 			</div>
 			<div class="content">
 				<div class="stats">
-					<img src="stats-cpu.png" />
+					<i class="fas header fa-server"></i>
 					<span>Uptime: <b id="statsSYSUptime">up xx days, xx hours</b><span>
 					<span>Speed: <b id="statsCPUSpeed">---MHz</b> (<b id="statsCPUTemp">--°C</b>)<span>
 					<span>Load: <b id="statsSYSLoad"> x.xx, x.xx, x.xx</b><span>
 					<span>Free RAM: <b id="statsRAMFree"> ---MB</b>/<b id="statsRAMTotal"> ---MB</b><span>
 					<span>IP Address: <b id="statsSYSIP"> xxx.xxx.xxx.xxx</b><span>
+					<span>WiFi: <b id="statsWIFI"> xxx.xxx.xxx.xxx</b><span>
 				</div>
 				<div class="controls">
-					<div onclick="getApi('output','/run/reboot','')" class="option"><img src="reboot.png" /><span>Reboot</span></div>
-					<div onclick="getApi('output','/run/poweroff','')" class="option"><img src="poweroff.png" /><span>Power Off</span></div>
-					<div class="option wsub"><img src="bluetooth.png" /><span>Bluetooth</span>
+					<div onclick="getApi('output','/run/reboot','')" class="option"><i class="fas main fa-redo-alt"></i><span>Reboot</span></div>
+					<div onclick="getApi('output','/run/poweroff','')" class="option"><i class="fas main fa-power-off"></i><span>Power Off</span></div>
+					<div onclick="getApi('output','/run/restartscript','')" class="option"><i class="fas main fa-retweet"></i><span>Restart Script</span></div>
+					<div class="option wsub"><i class="fab main fa-bluetooth-b"></i><span>Bluetooth</span>
 						<div class="sub">
 							<div onclick="getApi('output','/run/service/start/bluetooth','')">Start</div>
 							<div onclick="getApi('output','/run/service/restart/bluetooth','')">Re-Start</div>
@@ -33,10 +37,9 @@
 					<div class="line"><label for="password">Security password : </label> <input type="password" name="password" id="password" /></div>
 					<div id="output" class="output"></div>
 				</div>
-				<div class="scene"><div class="el-wrap x"><div id="el1" class="el y"><div class="cube"><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div><div class="side front"></div></div></div></div></div>
 			</div>
 			<div class="footer">
-				<a href="https://github.com/levelKro/piWebCtrl">piWebCtrl</a> © 2021 Mathieu <i>levelKro</i> Légaré
+				<span><a href="https://github.com/levelKro/piWebCtrl">piWebCtrl</a> © 2021 Mathieu <i>levelKro</i> Légaré | <a href="https://github.com/parapauk/piWebCtrl/" target="_new">forked and updated by parapauk 2025</a></span>
 			</div>
 		</div>
 	</body>
