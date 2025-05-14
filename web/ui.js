@@ -58,30 +58,36 @@ function geStats(id) {
 			else{
 				document.getElementById(id).innerHTML=values.error;
 			}	
-			setTimeout("geStats('output')",10000);
+			//setTimeout("geStats('output')",10000);
 		}
 	}
 	gStats.open("GET","stats.json?"+Math.random(),true);
 	gStats.send();	
 }
 
-//setTimeout("geStats('output')",5000);
 geStats('output')
 
+// Update the count down timer and also the stats
 var timeLeft = 5;
-var elem = document.getElementById('timer');
-
 var timerId = setInterval(countdown, 1000);
-
 function countdown() {
-  var elem = document.getElementById('timer');
-  if (timeLeft == 0) {
-    //clearTimeout(timerId);
-    elem.innerHTML = timeLeft;
-    timeLeft = '5'
-    geStats('output')
-  } else {
-    elem.innerHTML = timeLeft;
-    timeLeft--;
-  }
+ 	var elem = document.getElementById('timer');
+        var pulseBox = document.getElementById('stats');
+	function sleep (time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
+
+    // Do something after the sleep!
+	if (timeLeft == 0) {
+		elem.innerHTML = timeLeft;
+		timeLeft = '5'
+		geStats('output')
+		pulseBox.classList.add("animate");
+		sleep(500).then(() => {
+			pulseBox.classList.remove("animate");
+		});
+	} else {
+		elem.innerHTML = timeLeft;
+		timeLeft--;
+	}
 }

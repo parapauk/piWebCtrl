@@ -4,7 +4,7 @@ body, html {
 	color:#fff;
 }
 a {
-	color:#1a5fd6;
+	color: #6CC04A;
 	text-decoration:none;
 }
 a:hover {
@@ -16,12 +16,11 @@ a:hover {
 	margin:20px auto;
 	min-width:320px;
 	max-width:800px;
-	height: calc(100vh - 50px);
+	height: calc(100vh - 200px);
 	background:#131a26;
 }
 .header {
 	margin:10px;
-	border-bottom:1px solid #0b0b0d;
 	display:block;
 }
 .content {
@@ -32,7 +31,6 @@ a:hover {
 }
 .footer {
 	margin:10px;
-	border-top:1px solid #0b0b0d;
 	display:block;
 	text-align:center;
 	font-size:14px;
@@ -59,7 +57,6 @@ a.logo small {
 }
 .controls div.option {
 	width: 75px;
-	height:100px;
 	overflow:hidden;
 	display:inline-block;
 	margin:10px;
@@ -68,6 +65,7 @@ a.logo small {
 	text-align:center;
 	padding:10px;
 	border:1px solid #0b0b0d;
+	position: relative;
 }
 .controls div.option:hover {
 	color:#fff;
@@ -81,6 +79,9 @@ a.logo small {
 }
 .controls div.option div.sub {
 	display:none;
+	position: absolute;
+	top: 0px;
+	width: 80%;
 }
 .controls div.option.wsub:hover img,
 .controls div.option.wsub:focus img {
@@ -97,10 +98,13 @@ div.sub div {
 	padding:1px 3px;
 	margin:2px;
 	font-size:12px;
-	color:#fff;
+	color:#db1d66;
 	text-align:center;
 	border:1px solid #0b0b0d;
 	background:rgba(0,0,0,0.9);
+}
+div.sub div:hover { 
+	color: #fff;
 }
 .output {
 	color:#fff;
@@ -117,7 +121,7 @@ div.sub div {
 }
 .output::before {
 	content:'Output:> ';
-	color:#1b6af2
+	color:#6CC04A;
 }
 .output::after {
 	content:'_';
@@ -148,6 +152,35 @@ input[type="password"]{
 	text-align:left;
 	min-height:64px;
 	width:90%;
+	border-radius: 10px;
+}
+.animate {
+	animation: pulse 1s 1;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
 }
 .stats img {
 	margin:5px 10px 0 -64px;
@@ -161,13 +194,24 @@ input[type="password"]{
 	
 }
 .stats span b {
-	color:#1b6af2
+	color: #6CC04A;
 }
 .main {
 	font-size: 60px;
-	color: #185fd9;
+	#color: #6CC04A;
+	background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 32%, rgba(83, 124, 237, 1) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 .fas.header {
 	font-size: 54px;
 	float: left;
+        background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 32%, rgba(83, 124, 237, 1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+}
+.pi-logo {
+	width: 29px;
+	color: #C51A4A;
+	padding: 0 10px 0 5px;
 }
