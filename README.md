@@ -30,6 +30,10 @@ Running it in Background, open any web browser and point it to your Pi network I
 
 `sudo systemctl enable piwebctrl`
 
+* Edit correct homedir in sh file;
+
+`nano piwebctrl.sh`
+
 * Configure the piWebCtrl (port and password);
 
 `nano /home/pi/piWebCtrl/piwebctrl.py`
