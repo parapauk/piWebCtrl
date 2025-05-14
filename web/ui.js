@@ -65,4 +65,23 @@ function geStats(id) {
 	gStats.send();	
 }
 
- setTimeout("geStats('output')",2000);
+//setTimeout("geStats('output')",5000);
+geStats('output')
+
+var timeLeft = 5;
+var elem = document.getElementById('timer');
+
+var timerId = setInterval(countdown, 1000);
+
+function countdown() {
+  var elem = document.getElementById('timer');
+  if (timeLeft == 0) {
+    //clearTimeout(timerId);
+    elem.innerHTML = timeLeft;
+    timeLeft = '5'
+    geStats('output')
+  } else {
+    elem.innerHTML = timeLeft;
+    timeLeft--;
+  }
+}

@@ -122,7 +122,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def get_cpu_speed(self):
         try:
-            f = os.popen('/opt/vc/bin/vcgencmd get_config arm_freq')
+            f = os.popen('/usr/bin/vcgencmd get_config arm_freq')
             cpu = f.read()
             if cpu != "":
                 return cpu.split("=")[1].replace("\n","")
