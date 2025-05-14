@@ -78,7 +78,7 @@ a:hover {
   margin: var(--spacing-large) auto;
   min-width: var(--wrapper-min-width);
   max-width: var(--wrapper-max-width);
-  height: calc(100vh - 200px); /* Consider making this a variable if used elsewhere */
+  height: auto;
   background-color: var(--color-secondary-bg);
 }
 
@@ -92,13 +92,13 @@ a:hover {
 .content {
   font-size: var(--font-size-content);
   text-align: center;
+  padding: 1px;
 }
 
 .footer {
   text-align: center;
   font-size: var(--font-size-small);
 }
-
 /* Logo */
 a.logo span {
   font-size: var(--font-size-logo);
@@ -326,3 +326,9 @@ input[type="password"] {
     box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
   }
 }
+#wifiMeter {
+  width: 100%;
+  margin-top: 10px;
+  opacity: 0.2;
+}
+

@@ -15,6 +15,7 @@ PORT = 9000
 PASS = "42758"
 WEBPATH = "web"
 
+SCRIPT_COMMAND = "w"
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -44,7 +45,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                     os.system("sudo reboot &")
                 if pathSection[2] == "restartscript":
                     self.wfile.write(bytes('{"html":"Restarting the script","cmd":null}', "utf-8"))
-                    os.system("w")
+                    os.system("sudo systemctl restart weatherhat.service")
                 elif pathSection[2] == "poweroff":
                     self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
                     os.system("sudo poweroff &")

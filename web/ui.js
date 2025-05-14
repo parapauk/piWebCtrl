@@ -1,93 +1,138 @@
-ga = [];
-function getApi(id,action,values) { 
-	if(!values) values="?tm"+Math.random();
-	else values=values+"&tm"+Math.random();
-	pass = document.getElementById("password").value;
-	if(pass != ""){
-		document.getElementById(id).innerHTML="";
-		values = values + "&pass=" + pass;
-		if (window.XMLHttpRequest) { ga[id]=new XMLHttpRequest(); }
-		else { ga[id]=new ActiveXObject("Microsoft.XMLHTTP"); }
-		ga[id].onreadystatechange=function() {
-			if (ga[id].readyState==4 && ga[id].status==200) {
-				var result=ga[id].responseText;		
-				var values=JSON.parse(result);	
-				if(!values.error){
-					if(values.html) {
-						document.getElementById(id).innerHTML=values.html;
-					}
-					if(values.cmd){
-						for(var c=0;c<values.cmd.length;c++){
-							console.log("Eval: "+values.cmd[c]);
-							eval(values.cmd[c]);
-						}
-					}
-					
-				}
-				else{
-					document.getElementById(id).innerHTML=values.error;
-				}	
-			}
-		}
-		ga[id].open("GET",action+values,true);
-		ga[id].send();	
-	
-	}
-	else {
-		document.getElementById(id).innerHTML="Password can't be empty"
-	}		
+const apiRequests = {}; // Object to store XMLHttpRequest objects for getApi
+
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return { error: error.message };
+  }
 }
 
-function geStats(id) { 
-	if (window.XMLHttpRequest) { gStats=new XMLHttpRequest(); }
-	else { gStats=new ActiveXObject("Microsoft.XMLHTTP"); }
-	gStats.onreadystatechange=function() {
-		if (gStats.readyState==4 && gStats.status==200) {
-			var result=gStats.responseText;		
-			var values=JSON.parse(result);	
-			if(!values.error){
-				document.getElementById("statsCPUSpeed").innerHTML=values.cpuspeed;
-				document.getElementById("statsCPUTemp").innerHTML=values.cputemp;
-				document.getElementById("statsRAMFree").innerHTML=values.ramfree;
-				document.getElementById("statsRAMTotal").innerHTML=values.ramtotal;
-				document.getElementById("statsSYSLoad").innerHTML=values.load;
-				document.getElementById("statsSYSUptime").innerHTML=values.uptime;
-				document.getElementById("statsSYSIP").innerHTML=values.ip;
-                                document.getElementById("statsWIFI").innerHTML=values.wifi;
-			}
-			else{
-				document.getElementById(id).innerHTML=values.error;
-			}	
-			//setTimeout("geStats('output')",10000);
-		}
-	}
-	gStats.open("GET","stats.json?"+Math.random(),true);
-	gStats.send();	
+async function updateElement(elementId, content) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.innerHTML = content;
+  } else {
+    console.error(`Element with ID "${elementId}" not found.`);
+  }
 }
 
-geStats('output')
-
-// Update the count down timer and also the stats
-var timeLeft = 5;
-var timerId = setInterval(countdown, 1000);
-function countdown() {
- 	var elem = document.getElementById('timer');
-        var pulseBox = document.getElementById('stats');
-	function sleep (time) {
-		return new Promise((resolve) => setTimeout(resolve, time));
-	}
-
-    // Do something after the sleep!
-	if (timeLeft == 0) {
-		elem.innerHTML = timeLeft;
-		timeLeft = '5'
-		geStats('output')
-		pulseBox.classList.add("animate");
-		sleep(500).then(() => {
-			pulseBox.classList.remove("animate");
-		});
-	} else {
-		elem.innerHTML = timeLeft;
-		timeLeft--;
-	}
+async function executeCommands(commands) {
+  if (Array.isArray(commands)) {
+    for (const command of commands) {
+      console.log("Executing:", command);
+      try {
+        eval(command); // Consider alternatives to eval for security
+      } catch (error) {
+        console.error("Error executing command:", command, error);
+      }
+    }
+  }
 }
+
+async function getApi(elementId, endpoint, params = {}) {
+  const password = document.getElementById("password").value;
+
+  if (!password) {
+    return updateElement(elementId, "Password can't be empty");
+  }
+
+  await updateElement(elementId, ""); // Clear previous content
+
+  const urlParams = new URLSearchParams({ ...params, pass: password, tm: Math.random() });
+  const apiUrl = `${endpoint}?${urlParams.toString()}`;
+
+  const data = await fetchData(apiUrl);
+
+  if (!data.error) {
+    if (data.html) {
+      await updateElement(elementId, data.html);
+    }
+    if (data.cmd) {
+      await executeCommands(data.cmd);
+    }
+  } else {
+    await updateElement(elementId, data.error);
+  }
+}
+
+async function getStats(outputElementId) {
+  const apiUrl = `stats.json?tm=${Math.random()}`;
+  const data = await fetchData(apiUrl);
+
+  if (!data.error) {
+    await updateElement("statsCPUSpeed", data.cpuspeed);
+    await updateElement("statsCPUTemp", data.cputemp);
+    await updateElement("statsRAMFree", data.ramfree);
+    await updateElement("statsRAMTotal", data.ramtotal);
+    await updateElement("statsSYSLoad", data.load);
+    await updateElement("statsSYSUptime", data.uptime);
+    await updateElement("statsSYSIP", data.ip);
+    await updateElement("statsWIFI", data.wifi);
+      const wifiStatusElement = document.getElementById('statsWIFI');
+      const wifiStatusText = wifiStatusElement.innerText || wifiStatusElement.textContent;
+      const regex = /Link Quality=(\d+\/\d+)/;
+      const match = wifiStatusText.match(regex);
+      const strengthSplit = match[1].split("/");
+      const strength = strengthSplit[0];
+      const total = strengthSplit[1]; 
+      const strPerc = (strength/total*100).toFixed(2); 
+      const meter = document.getElementById('wifiMeter');
+      meter.value = strPerc;
+  } else {
+    await updateElement(outputElementId, data.error);
+  }
+  // setTimeout(() => getStats(outputElementId), 10000); // Consider using setInterval outside
+}
+
+// Initial stats load
+getStats('output');
+
+// Countdown Timer
+let timeLeft = 5;
+const timerInterval = 1000;
+const timerElementId = 'timer';
+const pulseElementId = 'stats';
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function countdown() {
+  const timerElement = document.getElementById(timerElementId);
+  const pulseElement = document.getElementById(pulseElementId);
+
+  if (timerElement && pulseElement) {
+    if (timeLeft === 0) {
+      timerElement.innerHTML = timeLeft;
+      timeLeft = 5;
+      await getStats('output');
+      pulseElement.classList.add("animate");
+      await sleep(500);
+      pulseElement.classList.remove("animate");
+      const wifiStatusElement = document.getElementById('statsWIFI');
+      const wifiStatusText = wifiStatusElement.innerText || wifiStatusElement.textContent;
+      const regex = /Link Quality=(\d+\/\d+)/;
+      const match = wifiStatusText.match(regex);
+      const strengthSplit = match[1].split("/");
+      const strength = strengthSplit[0];
+      const total = strengthSplit[1]; 
+      const strPerc = (strength/total*100).toFixed(2); 
+      const meter = document.getElementById('wifiMeter');
+      meter.value = strPerc;
+    } else {
+      timerElement.innerHTML = timeLeft;
+      timeLeft--;
+    }
+  } else {
+    console.error(`Timer element with ID "${timerElementId}" or pulse element with ID "${pulseElementId}" not found.`);
+    clearInterval(timerId); // Stop the interval if elements are missing
+  }
+}
+
+const timerId = setInterval(countdown, timerInterval);
