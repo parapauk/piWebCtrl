@@ -229,6 +229,11 @@ input[type="password"] {
 
 /* Stats Section */
 .stats {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   display: inline-block;
   color: var(--color-white);
   background-color: var(--color-stats-bg);
@@ -353,4 +358,7 @@ svg {
   width: 0%;
   height: 100%;
   transition: 1s all;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
 }
