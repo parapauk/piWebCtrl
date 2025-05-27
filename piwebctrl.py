@@ -9,10 +9,12 @@ from os import path
 import json
 import psutil
 from gpiozero import CPUTemperature
+from dotenv import load_dotenv
 
+load_dotenv()
 
 PORT = 9000
-PASS = "42758"
+PASS = os.getenv("WEB_PASS")
 WEBPATH = "web"
 
 SCRIPT_COMMAND = "w"
